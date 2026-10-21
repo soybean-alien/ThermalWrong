@@ -1,3 +1,5 @@
+![ThermalWrong: your own animations and live CPU and GPU temps on the Thermalright Dynamic Vision 360](docs/assets/banner.png)
+
 # ThermalWrong
 
 ![ThermalWrong in action: the bundled Poseidon animation with live CPU and GPU temperatures](docs/demo.gif)
@@ -71,7 +73,7 @@ powershell -File build-installer.ps1      # self-contained publish + installer i
 - `src/ThermalWrong.Core`: USB device, protocol, decoder, player, sensors, overlay.
 - `src/ThermalWrong.App`: the tray app.
 - `src/ThermalWrong.Cli`: diagnostics: `probe`, `test`, `play <file> [--overlay]`, `snapshot`, `frames`, `autostart on|off`.
-- `tools/make-icon.ps1` redraws the icon, and `tools/make-demo-gif.ps1` re-records `docs/demo.gif`.
+- `tools/make-icon.ps1` redraws the icon, `tools/make-demo-gif.ps1` re-records `docs/demo.gif`, and `tools/banner/render.ps1` re-renders the banner and social preview.
 
 ## Credits and AI disclosure
 - Made by **soybean_alien**. Licensed under the **MIT License** (see [LICENSE](LICENSE)).
