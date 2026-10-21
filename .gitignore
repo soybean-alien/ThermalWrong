@@ -1,0 +1,15 @@
+# Build output
+bin/
+obj/
+artifacts/
+dist/
+.vs/
+*.user
+
+# Private reference: decompiled vendor code is never published
+decompiled/
+
+# Local only
+Desktop.ini
+Poseidon-Underwater-v2-notes.txt
+.claude/

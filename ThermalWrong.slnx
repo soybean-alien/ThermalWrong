@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ThermalWrong.App/ThermalWrong.App.csproj" />
+    <Project Path="src/ThermalWrong.Cli/ThermalWrong.Cli.csproj" />
+    <Project Path="src/ThermalWrong.Core/ThermalWrong.Core.csproj" />
+  </Folder>
+</Solution>

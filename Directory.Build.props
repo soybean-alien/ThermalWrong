@@ -1,0 +1,11 @@
+<Project>
+  <!-- ThermalWrong by soybean_alien · https://github.com/soybean-alien/ThermalWrong · MIT License -->
+  <PropertyGroup>
+    <Version>1.0.0</Version>
+    <Product>ThermalWrong</Product>
+    <Authors>soybean_alien</Authors>
+    <Company>soybean_alien</Company>
+    <Description>Plays your own animations and live CPU/GPU temperatures on Thermalright USB LCDs. Unofficial; not affiliated with Thermalright.</Description>
+    <RepositoryUrl>https://github.com/soybean-alien/ThermalWrong</RepositoryUrl>
+  </PropertyGroup>
+</Project>
