@@ -13,7 +13,7 @@ Put your own animations on the Thermalright USB LCD inside your PC, with your li
 ## Features
 
 - **Your own media on the screen.** MP4, MOV, MKV, WebM, AVI, GIF, PNG, JPG, BMP and WebP, scaled and cropped to fill the panel and looped forever.
-- **Decoded once, played from memory.** Each clip is decoded a single time into ready-to-send frames, so playback is smooth (30 fps, no hitch at the loop point) and light (about 1.5% CPU, around 80 to 110 MB of memory with a 9 second 960x540 clip).
+- **Decoded once, played from memory.** Each clip is decoded a single time into ready-to-send frames, so playback is smooth (30 fps, no hitch at the loop point) and light (about 8% of one CPU core with the temperatures on, around 90 to 130 MB of memory with a 9 second 960x540 clip).
 - **Live temperatures, no box.** Big white CPU (top left) and GPU (bottom right) temperatures with only a soft shadow behind them. The numbers come from the same sensor feed and sensor choices as TRCC itself.
 - **Plays nicely with TRCC.** One click hands the screen back to TRCC, and another takes it back.
 - **Starts with Windows**, with no UAC prompts, and runs quietly in the tray.
@@ -53,6 +53,7 @@ TRCC renders frames and passes them through shared memory to `USBLCDNEW.exe`, wh
 
 - **Handshake:** a 64-byte packet starting `12 34 56 78` with byte 56 set to `1`. The 1024-byte reply names the panel (`SSCRM-V1`) and its model number (byte 24) and sub-model (byte 36), which select the resolution: 960x540, 1920x462, 1280x480, 480x480 and others.
 - **Frames:** a 64-byte header (magic, command `2`, width, height, byte 56 = `2`, JPEG length at offset 60) followed by a JPEG under 450,000 bytes, sent on bulk endpoint `0x01`.
+- **Overlay:** the cached frames are re-coded once, losslessly, so ThermalWrong knows where every 16x16 block starts. Each frame then re-encodes only the blocks under the text, with the text blended in, and copies the rest of the JPEG bit for bit, instead of decoding and re-encoding the whole frame.
 - **Temperatures:** TRCC's `HWINFO.exe` publishes every sensor once a second in the shared memory `shareMemory_SysInfo`. ThermalWrong reads it and picks the CPU sensor (`CPU`, then `CPU Package`, `CPU Die (average)`, `CPU (Tctl/Tdie)`) and the GPU sensor (`GPU Temperature`, then `APU GFX`) in the same order TRCC does.
 
 Only one program can drive the LCD at a time, which is why ThermalWrong closes TRCC to take the screen.

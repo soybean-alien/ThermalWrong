@@ -155,7 +155,9 @@ public sealed class Player : IDisposable
                     }
                     Current = set;
                     _decodedFor = (device.Panel.Width, device.Panel.Height, rot);
-                    // Let go of decode scratch memory before settling into the loop.
+                    // Let go of decode scratch memory before settling into the loop; the frames were
+                    // re-coded into new arrays, so the large object heap is compacted too.
+                    System.Runtime.GCSettings.LargeObjectHeapCompactionMode = System.Runtime.GCLargeObjectHeapCompactionMode.CompactOnce;
                     GC.Collect(GC.MaxGeneration, GCCollectionMode.Aggressive, true, true);
                 }
 
@@ -204,7 +206,7 @@ public sealed class Player : IDisposable
             }
             else
             {
-                int length = overlay.Apply(packets[i], panel.Width, panel.Height, rotation, ref composed);
+                int length = overlay.Apply(packets[i], set.Layouts[i], panel.Width, panel.Height, rotation, ref composed);
                 device.Send(composed, length);
                 Remember(composed, length);
             }

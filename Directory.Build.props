@@ -1,7 +1,7 @@
 <Project>
   <!-- ThermalWrong by soybean_alien · https://github.com/soybean-alien/ThermalWrong · MIT License -->
   <PropertyGroup>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Product>ThermalWrong</Product>
     <Authors>soybean_alien</Authors>
     <Company>soybean_alien</Company>

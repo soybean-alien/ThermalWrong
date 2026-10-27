@@ -8,9 +8,11 @@ using System.Text.RegularExpressions;
 namespace ThermalWrong.Core;
 
 /// <summary>A clip decoded once into ready-to-send picture packets.</summary>
-public sealed class FrameSet(IReadOnlyList<byte[]> packets, double fps, string source)
+public sealed class FrameSet(IReadOnlyList<byte[]> packets, IReadOnlyList<JpegLayout?> layouts, double fps, string source)
 {
     public IReadOnlyList<byte[]> Packets { get; } = packets;
+    /// <summary>Per frame, where its MCUs are, so the overlay can re-encode only what it covers (null = unknown layout).</summary>
+    public IReadOnlyList<JpegLayout?> Layouts { get; } = layouts;
     public double Fps { get; } = fps;
     public string Source { get; } = source;
     public long TotalBytes { get; } = packets.Sum(p => (long)p.Length);
@@ -22,16 +24,18 @@ public static partial class MediaDecoder
 
     /// <summary>
     /// Decodes a video, GIF or image with ffmpeg into panel-sized JPEG packets, cropped to fill
-    /// and rotated for how the panel is mounted. ffmpeg exits as soon as decoding is done.
+    /// and rotated for how the panel is mounted. ffmpeg exits as soon as decoding is done. The frames are
+    /// then re-coded losslessly (<see cref="JpegSplice.Repack"/>) so the overlay can patch them cheaply.
     /// </summary>
-    public static FrameSet Decode(string path, int width, int height, int rotation, CancellationToken ct = default)
+    public static FrameSet Decode(string path, int width, int height, int rotation, CancellationToken ct = default, bool repack = true)
     {
         for (int q = 2; ; q += 2)
         {
             var (packets, fps) = Run(path, width, height, rotation, q, ct);
             if (packets.Count == 0) throw new InvalidDataException($"No frames could be decoded from {Path.GetFileName(path)}.");
+            var layouts = repack ? JpegSplice.Repack(packets, width, height) : new JpegLayout?[packets.Count];
             if (q >= 12 || packets.All(p => p.Length - LcdProtocol.HeaderSize < LcdProtocol.MaxJpegBytes))
-                return new FrameSet(packets, packets.Count == 1 ? 1 : fps, path);
+                return new FrameSet(packets, layouts, packets.Count == 1 ? 1 : fps, path);
         }
     }
 
