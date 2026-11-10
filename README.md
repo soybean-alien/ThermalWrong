@@ -1,5 +1,7 @@
 ![ThermalWrong: your own animations and live CPU and GPU temps on the Thermalright Dynamic Vision 360](docs/assets/banner.png)
 
+<p align="center"><img src="docs/assets/ThermalWrong-Stack.svg" alt="Built with C# 87.2%, PowerShell 6.8%, HTML 3.3% (GitHub language breakdown)"></p>
+
 # ThermalWrong
 
 ![ThermalWrong in action: the bundled Poseidon animation with live CPU and GPU temperatures](docs/demo.gif)
