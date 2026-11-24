@@ -1,0 +1,10 @@
+# Dependabot: weekly pull requests for NuGet packages, minor and patch updates grouped.
+version: 2
+updates:
+  - package-ecosystem: nuget
+    directories: ["/src/ThermalWrong.App", "/src/ThermalWrong.Cli", "/src/ThermalWrong.Core"]
+    schedule:
+      interval: weekly
+    groups:
+      nuget-minor-and-patch:
+        update-types: [minor, patch]
